@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Movie & series search using the OMDb API" />
+    <title>i2i OMDb Series and Movie Search</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <h1>i2i OMDb Series and Movie Search</h1>
+          <p class="tagline">Fast movie & series lookup via OMDb API</p>
+        </div>
+        <form id="searchForm" class="search-bar" autocomplete="off">
+          <label class="visually-hidden" for="searchInput">Title</label>
+          <input
+            id="searchInput"
+            name="q"
+            type="search"
+            placeholder="e.g., Inception, The Matrix…"
+            maxlength="120"
+            required
+          />
+          <button type="submit" id="searchBtn" class="btn-primary">Search</button>
+        </form>
+      </div>
+    </header>
+
+    <div class="layout container">
+      <aside class="filters-panel" aria-labelledby="filters-heading">
+        <h2 id="filters-heading" class="filters-title">Filters</h2>
+        <p class="filters-hint">Optional</p>
+
+        <div class="filter-group">
+          <label for="filterYear">Year</label>
+          <input
+            id="filterYear"
+            name="year"
+            type="number"
+            inputmode="numeric"
+            min="1878"
+            max="2035"
+            placeholder="e.g., 2010"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="filterType">Type</label>
+          <select id="filterType" name="type">
+            <option value="">All</option>
+            <option value="movie">Movie</option>
+            <option value="series">Series</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterPlot">Plot length</label>
+          <select id="filterPlot" name="plot">
+            <option value="short">Short</option>
+            <option value="full">Full</option>
+          </select>
+        </div>
+
+        <button type="button" id="clearFiltersBtn" class="btn-ghost">Reset filters</button>
+      </aside>
+
+      <main id="main-content" class="main-panel">
+        <div id="statusMessage" class="status-banner status-hidden" role="status" aria-live="polite"></div>
+        <div id="errorMessage" class="status-banner error-banner error-hidden" role="alert"></div>
+
+        <section id="movieSection" class="movie-section" aria-live="polite">
+          <div id="moviePlaceholder" class="placeholder-card">
+            <p>No search yet. Type a title above and click <strong>Search</strong>.</p>
+          </div>
+          <div id="searchResults" class="results-list results-hidden" aria-label="Search results">
+            <div class="results-header">
+              <h2 class="results-title">Results</h2>
+              <p id="resultsMeta" class="results-meta"></p>
+            </div>
+            <ul id="resultsList" class="results-items"></ul>
+            <button type="button" id="loadMoreBtn" class="btn-ghost results-more results-hidden">
+              Load more
+            </button>
+          </div>
+          <article id="movieResult" class="movie-card movie-hidden"></article>
+        </section>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Data source: <a href="https://www.omdbapi.com/" rel="noopener noreferrer">OMDb API</a></p>
+      </div>
+    </footer>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
