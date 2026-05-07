@@ -1,5 +1,5 @@
 /**
- * Uygulama giriş noktası: form, filtreler, önbellek ve iptal edilebilir fetch.
+ * App entry point: form + filters + cancellable fetch.
  */
 
 import { OMDB_API_KEY } from "./config.js";
@@ -26,10 +26,10 @@ const filterType = /** @type {HTMLSelectElement} */ (document.getElementById("fi
 const filterPlot = /** @type {HTMLSelectElement} */ (document.getElementById("filterPlot"));
 const clearFiltersBtn = /** @type {HTMLButtonElement} */ (document.getElementById("clearFiltersBtn"));
 
-/** Son başarılı istek anahtarı — gereksiz tekrarları önlemek için */
+/** Last successful query key to avoid accidental duplicate requests. */
 let lastSuccessKey = "";
 
-/** Önceki isteği iptal etmek için */
+/** Abort previous request when a new one starts. */
 let abortController = null;
 
 let currentResultsQueryKey = "";

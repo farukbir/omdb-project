@@ -1,5 +1,5 @@
 /**
- * DOM güncellemeleri
+ * DOM helpers (rendering and UI state)
  */
 
 const els = {
@@ -54,7 +54,7 @@ export function hideResultsList() {
 }
 
 /**
- * @param {object} movie OMDb tek kayıt yanıtı
+ * @param {object} movie OMDb detail response
  */
 export function renderMovie(movie) {
   els.moviePlaceholder.classList.add("movie-hidden");
@@ -82,7 +82,7 @@ export function renderMovie(movie) {
 }
 
 /**
- * @param {object[]} items OMDb Search listesi
+ * @param {object[]} items OMDb Search list
  * @param {object} meta
  * @param {number} meta.totalResults
  * @param {number} meta.page
@@ -123,7 +123,13 @@ export function renderResultsList(items, meta) {
     })
     .join("");
 
-  els.resultsList.insertAdjacentHTML("beforeend", html);
+  if (page <= 1) {
+    // New search: replace previous list
+    els.resultsList.innerHTML = html;
+  } else {
+    // Pagination: append
+    els.resultsList.insertAdjacentHTML("beforeend", html);
+  }
 
   const shown = els.resultsList.querySelectorAll(".result-item").length;
   const canLoadMore = total > 0 && shown < total;

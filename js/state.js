@@ -1,5 +1,5 @@
 /**
- * Son arama görünümü: URL + localStorage ile kalıcılık.
+ * Persistence for last search: URL + localStorage.
  */
 
 const STORAGE_KEY = "i2i.omdb.lastSearch.v1";
@@ -45,9 +45,7 @@ export function loadPersistedSearch() {
         plot: parsed.plot === "full" ? "full" : "short",
       };
     }
-  } catch {
-    /* bozuk kayıt — yoksay */
-  }
+  } catch {}
   return null;
 }
 
@@ -63,8 +61,6 @@ export function persistSearch(state) {
         plot: state.plot === "full" ? "full" : "short",
       }),
     );
-  } catch {
-    /* quota / private mode */
-  }
+  } catch {}
   writeToUrl(state);
 }

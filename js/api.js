@@ -1,5 +1,5 @@
 /**
- * OMDb istekleri.
+ * OMDb requests.
  * @see https://www.omdbapi.com/
  */
 
@@ -33,21 +33,21 @@ function buildListParams({ query, apiKey, year, type, page }) {
  * @param {string} [opts.type] movie | series | episode
  * @param {string} [opts.plot] short | full
  * @param {AbortSignal} [opts.signal]
- * @returns {Promise<object>} OMDb JSON gövdesi
+ * @returns {Promise<object>} OMDb JSON body
  */
 export async function fetchMovieByTitle(opts) {
   const { title, apiKey, year, type, plot, signal } = opts;
   const url = `${BASE}?${buildSearchParams({ title, apiKey, year, type, plot })}`;
   const response = await fetch(url, { signal });
   if (!response.ok) {
-    throw new Error(`HTTP ${response.status}: istek başarısız.`);
+    throw new Error(`HTTP ${response.status}: request failed.`);
   }
   const data = await response.json();
   return data;
 }
 
 /**
- * Liste arama (s parametresi): 10 sonuç / sayfa
+ * List search (s param): 10 results per page
  * @param {object} opts
  * @param {string} opts.query
  * @param {string} opts.apiKey
@@ -60,12 +60,12 @@ export async function searchMovies(opts) {
   const { query, apiKey, page = 1, year, type, signal } = opts;
   const url = `${BASE}?${buildListParams({ query, apiKey, year, type, page })}`;
   const response = await fetch(url, { signal });
-  if (!response.ok) throw new Error(`HTTP ${response.status}: istek başarısız.`);
+  if (!response.ok) throw new Error(`HTTP ${response.status}: request failed.`);
   return await response.json();
 }
 
 /**
- * imdbID ile detay (i parametresi)
+ * Details by imdbID (i param)
  * @param {object} opts
  * @param {string} opts.imdbID
  * @param {string} opts.apiKey
@@ -80,6 +80,6 @@ export async function fetchMovieById(opts) {
   params.set("plot", plot === "full" ? "full" : "short");
   const url = `${BASE}?${params.toString()}`;
   const response = await fetch(url, { signal });
-  if (!response.ok) throw new Error(`HTTP ${response.status}: istek başarısız.`);
+  if (!response.ok) throw new Error(`HTTP ${response.status}: request failed.`);
   return await response.json();
 }
